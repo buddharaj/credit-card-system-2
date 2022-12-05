@@ -1,0 +1,59 @@
+import chai from 'chai';
+import chaiHttp	from 'chai-http';
+import * as dbname from '../src/database/conn.js';
+import * as appname from '../server.js';
+import { after, before, beforeEach } from 'mocha';
+// import supertest from 'supertest';
+// import app from 'server';
+
+// const app = require('../server.js');
+// const db = require('../src/database/conn.js');
+// Pass supertest agent for each test
+
+// Setup connection to the database
+// beforeAll(async () => await db.connect());
+// beforeEach(async () => await db.clear());
+// afterAll(async () => await db.close());
+// export const server = supertest.agent(app);
+chai.should()
+chai.expect()
+chai.use(chaiHttp)
+
+describe('Todos endpoint', async () => {
+	const request = await chai.request(appname.server);
+	// before(async() => {
+	// 	request = chai.request(appname.server);
+	// });
+
+	// after(async () => {
+	// 	await dbname.close(); 
+	// 	// await appname.stop();
+	// });
+
+// beforeEach(async () => await db.clear());
+// afterAll(async () => await db.close());
+	it('should throw error on invalid credit card number', async (done) => {
+		const resp = await request.post('/credit-card/create')
+				.send({
+					name: 'John Doe',
+					cardNumber: '12345678',
+					limit: '100',
+				});
+			console.log(resp.body)
+			done();
+	});
+	it.skip('should return sucess on valid post request', (done) => {
+		request.post('/credit-card/create')
+			   .send({
+				   name: 'buddharaj ambhore',
+				   cardNumber: '8763304723150326838',
+				   limit: '100',
+			   }).then(res => {
+				   console.log(res.json());
+				   res.should.have.status(200);
+				   done();
+			   }).catch(err => {
+				   throw err
+			   })
+   });
+});

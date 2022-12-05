@@ -1,0 +1,42 @@
+{
+  "name": "credit-card-system",
+  "version": "1.0.0",
+  "description": "an assignment to create a simple credit card system",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha tests --exit",
+    "lint": "eslint .",
+    "eslint-check": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/buddharaj/credit-card-system.git"
+  },
+  "author": "buddharaj ambhore",
+  "homepage": "https://github.com/buddharaj/credit-card-system#readme",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "eslint": "^8.29.0",
+    "mocha": "^10.1.0",
+    "mongodb-memory-server": "^8.10.1",
+    "nyc": "^15.1.0",
+    "supertest": "^6.3.2"
+  },
+  "dependencies": {
+    "chai-http": "^4.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "jsonschema": "^1.4.1",
+    "mongoose": "^6.7.5",
+    "request": "^2.88.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
+}
