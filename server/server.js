@@ -1,23 +1,12 @@
-import express from "express";
-import helmet from "helmet";
-import cors from "cors";
-import creditCard from "./src/routes/creditCard.route.js";
+import app from './app.js';
 import { connect } from "./src/database/conn.database.js";
-const app = express();
-
-// App middleware setup
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
-app.use(cors());
 
 // eslint-disable-next-line no-undef
-const port = process.env.port || 5000;
-app.use('/credit-card', creditCard);
-let server;
+const port = process.env.PORT || 5000;
+
 connect().then(() => {
     try {
-        server = app.listen(port, () => {
+        app.listen(port, () => {
             console.log(`Server is listening at http://localhost:${port}`);
         });
     } catch(error) {
@@ -26,9 +15,3 @@ connect().then(() => {
 }).catch((error) => {
     console.log(`Invalid database connection: ${JSON.stringify(error)}`);
 });
-
-function stop() {
-    server.close();
-}
-
-export { server as default, stop };

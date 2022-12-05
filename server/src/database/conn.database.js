@@ -8,6 +8,7 @@ let mongoUri;
  * @description - Provide connection to a new in-memory database server.
  */
 const connect = async () => {
+  try {
     mongodbServer = MongoMemoryServer.create();
     mongoUri = (await mongodbServer).getUri();
     await mongoose.connect(mongoUri, { dbName: 'creditCardDb'}, err => {
@@ -15,26 +16,23 @@ const connect = async () => {
             throw new Error(err);
         }
       });
-    console.log(`successfully connected to mongodb ${mongoUri}`);
+    console.log(`successfully connected to ${mongoUri}`);
+  } catch(err) {
+    throw new Error(err);
+  }
 }
 
 /**
  * @description - Provide connection to a new in-memory database server.
  */
 const close = async () => {
-  await mongoose.disconnect();
-  (await mongodbServer).stop();
-  console.log(`successfully closed to mongodb ${mongoUri}`);
-
-};
-/**
- * @description - Remove all data from collections
- */
-async function clear() {
-    const collections = mongoose.connection.collections;
-  for (const key in collections) {
-    await collections[key].deleteMany();
+  try {
+    await mongoose.disconnect();
+    (await mongodbServer).stop();
+    console.log(`successfully closed connection to ${mongoUri}`);
+  } catch(error) {
+    console.log(`Can not close mongodb connection: ${JSON.stringify(error)}`)
   }
-}
+};
 
-export { connect, close, clear };
+export { connect, close };
